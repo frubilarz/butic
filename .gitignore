@@ -7,7 +7,7 @@ project-root-directory/
 + src/
 + test/
 + build.xml
-+ docker-data/*
+docker-data/
 *.class
 # Package Files #
 *.jar
