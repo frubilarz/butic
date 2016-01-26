@@ -1,0 +1,11 @@
+data:
+  image: maxexcloo/data
+  volumes:
+    - ./data:/data mysql:
+  image: mysql
+  volumes:
+    - ./docker-data/mysql:/var/lib/mysql
+  env_file:
+    - ./envs/mysql.env
+  ports:
+    - "3333:3306"
