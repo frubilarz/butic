@@ -24,11 +24,11 @@ DROP TABLE IF EXISTS `buticdb`.`boletas` ;
 CREATE TABLE IF NOT EXISTS `buticdb`.`boletas` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `monto` DOUBLE NOT NULL,
-  `locale_id` INT(11) NOT NULL,
+  `local_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_boletas_locales1_idx` (`locale_id` ASC),
+  INDEX `fk_boletas_locales1_idx` (`local_id` ASC),
   CONSTRAINT `fk_boletas_locales1`
-    FOREIGN KEY (`locale_id`)
+    FOREIGN KEY (`local_id`)
     REFERENCES `buticdb`.`locales` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
