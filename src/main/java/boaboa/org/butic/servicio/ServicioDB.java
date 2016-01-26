@@ -6,6 +6,7 @@
 package boaboa.org.butic.servicio;
 
 import boaboa.org.butic.model.Boleta;
+import boaboa.org.butic.model.Cliente;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -100,40 +101,6 @@ public class ServicioDB implements Serializable {
         }
     }
 
-    public boolean guardar(Boleta boleta) {
-        boolean salida = false;
-        try {
-            if (boleta != null) {
-                if (!isConectado()) {
-                    conectar();
-                }
-
-                PreparedStatement st = null;
-                String query = "";
-                query = "INSERT INTO boletas (monto,local_id) VALUES (?,?)";
-                st = conexion.prepareStatement(query);
-
-                st.setDouble(1, boleta.getMonto());
-                st.setInt(2, boleta.getLocal_id());
-                if (st != null) {
-                    logger.info(st.toString());
-                    st.execute();
-                    int updateCount = st.getUpdateCount();
-                    if (updateCount > 0) {
-                        salida = true;
-                    }
-                }
-            } else {
-                logger.info("ERROR: boleta nulo");
-            }
-        } catch (Exception e) {
-            salida = false;
-            logger.debug("Error al intentar persistir una boleta: {}", e.toString(), e);
-            logger.error("Error al intentar persistir una boleta: {}", e.toString());
-        }
-        return salida;
-    }
-
     public Boleta getBoleta(Integer id) {
         Boleta boleta = null;
         try {
@@ -199,7 +166,7 @@ public class ServicioDB implements Serializable {
         return boletas;
     }
 
-    public boolean editar(Boleta boleta) {
+    public boolean guardar(Boleta boleta) {
         boolean salida = false;
         try {
             if (boleta != null) {
@@ -218,15 +185,164 @@ public class ServicioDB implements Serializable {
                 if (update) {
                     query = "UPDATE boletas SET monto=?, local_id=? WHERE id = ?";
                     st = conexion.prepareStatement(query);
-                    st.setDouble(1,boleta.getMonto());
+                    st.setDouble(1, boleta.getMonto());
                     st.setInt(2, boleta.getLocal_id());
                     st.setInt(3, boleta.getId());
+                } else {
+                    query = "INSERT INTO boletas (monto,local_id) VALUES (?,?)";
+                    st = conexion.prepareStatement(query);
+
+                    st.setDouble(1, boleta.getMonto());
+                    st.setInt(2, boleta.getLocal_id());
+                }
+                if (st != null) {
+                    logger.info(st.toString());
+                    st.execute();
+
+                    int updateCount = st.getUpdateCount();
+                    if (updateCount > 0) {
+                        salida = true;
+                    }
                 }
 
             }
         } catch (Exception e) {
+            salida = false;
+            logger.debug("Error al intentar  persisitir: {}", e.toString(), e);
+            logger.error("error al intentar persisitir: {}", e.toString());
         }
         return salida;
+    }
+
+    public boolean guardar(Cliente cliente) {
+        boolean salida = false;
+        try {
+            if (cliente != null) {
+                if (!isConectado()) {
+                    conectar();
+                }
+                boolean update = false;
+                if (cliente.getId() != null) {
+                    if (cliente.getId() > 0) {
+                        update = true;
+                    }
+                }
+                PreparedStatement st = null;
+                String query = "";
+                if (update) {
+                    query = "UPDATE clientes SET nombre=?, rut=? ,fono=?, mail=?, direccion=? WHERE id = ?";
+                    st = conexion.prepareStatement(query);
+                    st.setString(1, cliente.getNombre());
+                    st.setInt(2, cliente.getRut());
+                    st.setInt(3, cliente.getFono());
+                    st.setString(4, cliente.getEmail());
+                    st.setString(5, cliente.getDireccion());
+                    st.setInt(6, cliente.getId());
+
+                } else {
+                    query = "INSERT INTO clientes (nombre, rut, fono,mail,direccion) VALUES (?, ?, ?, ?,?)";
+                    st = conexion.prepareStatement(query);
+                    st.setString(1, cliente.getNombre());
+                    st.setInt(2, cliente.getRut());
+                    st.setInt(3, cliente.getFono());
+                    st.setString(4, cliente.getEmail());
+                    st.setString(5, cliente.getDireccion());
+                }
+                if (st != null) {
+                    logger.info(st.toString());
+                    st.execute();
+
+                    int updateCount = st.getUpdateCount();
+                    if (updateCount > 0) {
+                        salida = true;
+                    }
+                }
+
+            }
+
+        } catch (Exception e) {
+            salida = false;
+            logger.debug("error : {}", e.toString(), e);
+            logger.error("Error : {}", e.toString());
+        }
+        return salida;
+    }
+
+    public Cliente getCliente(Integer id) {
+        Cliente cliente = null;
+        try {
+            if (id != null) {
+                if (!isConectado()) {
+                    conectar();
+                }
+                PreparedStatement st = null;
+                String query = "SELECT * FROM clientes WHERE id = ?";
+                st = conexion.prepareStatement(query);
+                if (st != null) {
+                    st.setInt(1, id);
+
+                    ResultSet rs = st.executeQuery();
+                    if (rs != null) {
+                        if (rs.next()) {
+                            cliente = new Cliente();
+                            cliente.setDireccion(rs.getString("direccion"));
+                            cliente.setEmail(rs.getString("mail"));
+                            cliente.setFono(rs.getInt("fono"));
+                            cliente.setNombre(rs.getString("nombre"));
+                            cliente.setRut(rs.getInt("rut"));
+                            cliente.setId(rs.getInt("id"));
+
+                        }
+                        rs.close();
+                    }
+                    st.close();
+                }
+
+            }
+        } catch (Exception e) {
+            cliente = null;
+            logger.debug("Error al intentar obtener cliente por id : {}", e.toString(), e);
+            logger.error("Error al intentar obtener cliente por id : {}", e.toString());
+        }
+        return cliente;
+    }
+
+    public List<Cliente> getClientes() {
+        List<Cliente> clientes = new ArrayList<>();
+        try {
+            if (!isConectado()) {
+                conectar();
+            }
+            PreparedStatement st = null;
+            String query = "SELECT * FROM clientes ";
+            st = conexion.prepareStatement(query);
+            if (st != null) {
+                ResultSet rs = st.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+                        Cliente cliente = new Cliente();
+                        
+                        cliente.setId(rs.getInt("id"));
+                        cliente.setDireccion(rs.getString("direccion"));
+                        cliente.setEmail(rs.getString("mail"));
+                        cliente.setFono(rs.getInt("fono"));
+                        cliente.setNombre(rs.getString("nombre"));
+                        cliente.setRut(rs.getInt("rut"));
+                        
+
+                        clientes.add(cliente);
+                    }
+                    rs.close();
+                }
+                st.close();
+            }
+            
+        } catch (Exception e) {
+            clientes = new ArrayList<Cliente>();
+            logger.debug("Error al intentar obtener todos los clientes: {}",e.toString(),e);
+            logger.error("Error al intentar obtener todos los clientes: {}",e.toString());
+        }
+        return clientes;
     }
 
 }
