@@ -7,8 +7,10 @@ package boaboa.org.butic.servicio;
 
 import boaboa.org.butic.model.Boleta;
 import boaboa.org.butic.model.Cliente;
+import boaboa.org.butic.model.Local;
 import java.io.Serializable;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -101,6 +103,42 @@ public class ServicioDB implements Serializable {
         }
     }
 
+    public List<Boleta> getBoleta(Local local) {
+        List<Boleta> boletas = new ArrayList<Boleta>();
+        try {
+            if (local != null) {
+                if (!isConectado()) {
+                    conectar();
+                }
+                String query = "select b.* from boletas b inner join locales on locales.id= b.local_id and locales.id = ?";
+                PreparedStatement st = null;
+                st = conexion.prepareStatement(query);
+                if (st != null) {
+                    st.setInt(1, local.getId());
+                    ResultSet rs = st.executeQuery();
+                    if (rs != null) {
+                        while (rs.next()) {
+                            Boleta boleta = new Boleta();
+                            boleta.setId(rs.getInt("id"));
+                            boleta.setMonto(rs.getDouble("monto"));
+                            boleta.setLocal_id(rs.getInt("local_id"));
+                            boleta.setFecha(rs.getDate("fecha"));
+
+                            boletas.add(boleta);
+                        }
+                        rs.close();
+                    }
+                    st.close();
+                }
+            }
+        } catch (Exception e) {
+            boletas = new ArrayList<>();
+            logger.error("Error al intentar obtener una boleta por local: {}", e.toString());
+            logger.debug("Error al intentar obtener una boleta por local: {}", e.toString(), e);
+        }
+        return boletas;
+    }
+
     public Boleta getBoleta(Integer id) {
         Boleta boleta = null;
         try {
@@ -120,6 +158,7 @@ public class ServicioDB implements Serializable {
                             boleta.setId(rs.getInt("id"));
                             boleta.setMonto(rs.getDouble("monto"));
                             boleta.setLocal_id(rs.getInt("local_id"));
+                            boleta.setFecha(rs.getDate("fecha"));
                         }
                         rs.close();
                     }
@@ -151,6 +190,7 @@ public class ServicioDB implements Serializable {
                         boleta.setId(rs.getInt("id"));
                         boleta.setMonto(rs.getDouble("monto"));
                         boleta.setLocal_id(rs.getInt("local_id"));
+                        boleta.setFecha(rs.getDate("fecha"));
 
                         boletas.add(boleta);
                     }
@@ -189,11 +229,12 @@ public class ServicioDB implements Serializable {
                     st.setInt(2, boleta.getLocal_id());
                     st.setInt(3, boleta.getId());
                 } else {
-                    query = "INSERT INTO boletas (monto,local_id) VALUES (?,?)";
+                    query = "INSERT INTO boletas (monto,local_id,fecha) VALUES (?,?,?)";
                     st = conexion.prepareStatement(query);
 
                     st.setDouble(1, boleta.getMonto());
                     st.setInt(2, boleta.getLocal_id());
+                    st.setDate(3, (Date) boleta.getFecha());
                 }
                 if (st != null) {
                     logger.info(st.toString());
@@ -321,14 +362,13 @@ public class ServicioDB implements Serializable {
                 if (rs != null) {
                     while (rs.next()) {
                         Cliente cliente = new Cliente();
-                        
+
                         cliente.setId(rs.getInt("id"));
                         cliente.setDireccion(rs.getString("direccion"));
                         cliente.setEmail(rs.getString("mail"));
                         cliente.setFono(rs.getInt("fono"));
                         cliente.setNombre(rs.getString("nombre"));
                         cliente.setRut(rs.getInt("rut"));
-                        
 
                         clientes.add(cliente);
                     }
@@ -336,11 +376,11 @@ public class ServicioDB implements Serializable {
                 }
                 st.close();
             }
-            
+
         } catch (Exception e) {
             clientes = new ArrayList<Cliente>();
-            logger.debug("Error al intentar obtener todos los clientes: {}",e.toString(),e);
-            logger.error("Error al intentar obtener todos los clientes: {}",e.toString());
+            logger.debug("Error al intentar obtener todos los clientes: {}", e.toString(), e);
+            logger.error("Error al intentar obtener todos los clientes: {}", e.toString());
         }
         return clientes;
     }

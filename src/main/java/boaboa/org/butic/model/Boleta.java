@@ -5,6 +5,7 @@
  */
 package boaboa.org.butic.model;
 
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -14,6 +15,7 @@ import java.util.Objects;
 public class Boleta extends BaseBean {
 
     private Integer id = null;
+    private Date fecha = null;
     private Double monto = null;
     private Integer local_id = null;
 
@@ -38,6 +40,14 @@ public class Boleta extends BaseBean {
 
     public Integer getLocal_id() {
         return local_id;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
     public void setLocal_id(Integer local_id) {
@@ -65,7 +75,5 @@ public class Boleta extends BaseBean {
         }
         return true;
     }
-    
-    
 
 }

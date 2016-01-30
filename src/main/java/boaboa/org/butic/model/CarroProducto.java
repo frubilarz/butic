@@ -16,7 +16,6 @@ public class CarroProducto extends BaseBean {
 
     private Integer id = null;
     private Integer cantidad = null;
-    private Date fecha = null;
     private Integer boleta_id = null;
     private Integer producto_id = null;
     private Integer cliente_id = null;
@@ -38,14 +37,6 @@ public class CarroProducto extends BaseBean {
 
     public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
-    }
-
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
     }
 
     public Integer getBoleta_id() {

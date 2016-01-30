@@ -23,6 +23,7 @@ DROP TABLE IF EXISTS `buticdb`.`boletas` ;
 
 CREATE TABLE IF NOT EXISTS `buticdb`.`boletas` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `fecha` DATE NOT NULL,
   `monto` DOUBLE NOT NULL,
   `local_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
@@ -97,7 +98,6 @@ DROP TABLE IF EXISTS `buticdb`.`carros_productos` ;
 CREATE TABLE IF NOT EXISTS `buticdb`.`carros_productos` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `cantidad` INT NULL DEFAULT 0,
-  `fecha` DATE NOT NULL,
   `boleta_id` INT(11) NOT NULL DEFAULT 0,
   `producto_id` INT(11) NOT NULL,
   `clientes_id` INT(11) NOT NULL DEFAULT 0,
