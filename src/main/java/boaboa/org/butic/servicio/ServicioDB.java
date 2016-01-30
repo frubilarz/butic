@@ -8,6 +8,7 @@ package boaboa.org.butic.servicio;
 import boaboa.org.butic.model.Boleta;
 import boaboa.org.butic.model.Cliente;
 import boaboa.org.butic.model.Local;
+import boaboa.org.butic.model.Usuario;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.Date;
@@ -132,11 +133,42 @@ public class ServicioDB implements Serializable {
                 }
             }
         } catch (Exception e) {
-            boletas = new ArrayList<>();
+            boletas = new ArrayList<Boleta>();
             logger.error("Error al intentar obtener una boleta por local: {}", e.toString());
             logger.debug("Error al intentar obtener una boleta por local: {}", e.toString(), e);
         }
         return boletas;
+    }
+
+    public Usuario getUsuario(Integer rut) {
+        Usuario usuario = null;
+        try {
+            if (rut != null) {
+                if (!isConectado()) {
+                    conectar();
+                }
+                PreparedStatement st = null;
+                String query = "select * from usuarios where rut = ?";
+                st = conexion.prepareStatement(query);
+                if (st != null) {
+                    st.setInt(1, rut);
+                    ResultSet rs = st.executeQuery();
+                    if (rs != null) {
+                        if (rs.next()) {
+                            usuario = new Usuario();
+                            usuario.setId(rs.getInt("id"));
+                            usuario.setClave(rs.getString("clave"));
+                            usuario.setNombre(rs.getString("nombre"));
+                            usuario.setRut(rs.getInt("rut"));
+                        }
+                        rs.close();
+                    }
+                    st.close();
+                }
+            }
+        } catch (Exception e) {
+        }
+        return usuario;
     }
 
     public Boleta getBoleta(Integer id) {
@@ -174,7 +206,7 @@ public class ServicioDB implements Serializable {
     }
 
     public List<Boleta> getBoletas() {
-        List<Boleta> boletas = new ArrayList<>();
+        List<Boleta> boletas = new ArrayList<Boleta>();
         try {
             if (!isConectado()) {
                 conectar();
@@ -199,7 +231,7 @@ public class ServicioDB implements Serializable {
                 st.close();
             }
         } catch (Exception e) {
-            boletas = new ArrayList<>();
+            boletas = new ArrayList<Boleta>();
             logger.error("Error al intentar obtener todas las boletas: {}", e.toString());
             logger.debug("Error al intentar obtener todas las boletas: {}", e.toString(), e);
         }
@@ -255,6 +287,54 @@ public class ServicioDB implements Serializable {
         return salida;
     }
 
+    public boolean guardar(Usuario usuario) {
+        boolean salida = false;
+        try {
+            if (usuario != null) {
+                if (!isConectado()) {
+                    conectar();
+                }
+                boolean update = false;
+                if (usuario.getId() != null) {
+                    if (usuario.getId() > 0) {
+                        update = true;
+                    }
+                }
+
+                PreparedStatement st = null;
+                String query = "";
+                if (update) {
+                    query = "UPDATE usuarios SET nombre=?,clave=? WHERE rut = ?";
+                    st = conexion.prepareStatement(query);
+                    st.setString(1, usuario.getNombre());
+                    st.setString(2, usuario.getClave());
+                    st.setInt(3, usuario.getRut());
+
+                } else {
+                    query = "INSERT INTO usuarios (nombre, rut,clave) VALUES (?, ?, ?)";
+                    st = conexion.prepareStatement(query);
+                    st.setString(1, usuario.getNombre());
+                    st.setInt(2, usuario.getRut());
+                    st.setString(3, usuario.getClave());
+                }
+                if (st != null) {
+                    logger.info(st.toString());
+                    st.execute();
+
+                    int updateCount = st.getUpdateCount();
+                    if (updateCount > 0) {
+                        salida = true;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            salida = false;
+            logger.debug("Error al intentar persistir un usuario : {}", e.toString(), e);
+            logger.error("Error al intentar persistir un usuario : {}", e.toString());
+        }
+        return salida;
+    }
+
     public boolean guardar(Cliente cliente) {
         boolean salida = false;
         try {
@@ -298,7 +378,6 @@ public class ServicioDB implements Serializable {
                         salida = true;
                     }
                 }
-
             }
 
         } catch (Exception e) {
@@ -349,7 +428,7 @@ public class ServicioDB implements Serializable {
     }
 
     public List<Cliente> getClientes() {
-        List<Cliente> clientes = new ArrayList<>();
+        List<Cliente> clientes = new ArrayList<Cliente>();
         try {
             if (!isConectado()) {
                 conectar();

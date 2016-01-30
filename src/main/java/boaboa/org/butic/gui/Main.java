@@ -6,7 +6,9 @@
 package boaboa.org.butic.gui;
 
 import boaboa.org.butic.model.Cliente;
+import boaboa.org.butic.model.Usuario;
 import boaboa.org.butic.servicio.ServicioDB;
+import boaboa.org.butic.utils.SecurityUtils;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,8 +27,13 @@ public class Main {
         cliente.setFono(1234567);
         cliente.setNombre("Fernando Rubilar");
         cliente.setRut(12345678);
+        Usuario usuario = new Usuario();
+        usuario.setNombre("Fernando rubilar");
+        usuario.setRut(17708487);
+        String pass = SecurityUtils.sha256("password");
+        usuario.setClave(pass);
         
-        boolean salida =servicio.guardar(cliente);
+        boolean salida = servicio.guardar(usuario);
         if(salida){
             JOptionPane.showMessageDialog(null, cliente.getNombre());
         }else{
