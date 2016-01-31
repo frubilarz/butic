@@ -427,6 +427,44 @@ public class ServicioDB implements Serializable {
         return cliente;
     }
 
+    public Cliente getClientePorRut(Integer rut) {
+        Cliente cliente = null;
+        try {
+            if (rut != null) {
+                if (!isConectado()) {
+                    conectar();
+                }
+                PreparedStatement st = null;
+                String query = "SELECT * FROM clientes WHERE rut = ?";
+                st = conexion.prepareStatement(query);
+                if (st != null) {
+                    st.setInt(1, rut);
+
+                    ResultSet rs = st.executeQuery();
+                    if (rs != null) {
+                        if (rs.next()) {
+                            cliente = new Cliente();
+                            cliente.setDireccion(rs.getString("direccion"));
+                            cliente.setEmail(rs.getString("mail"));
+                            cliente.setFono(rs.getInt("fono"));
+                            cliente.setNombre(rs.getString("nombre"));
+                            cliente.setRut(rs.getInt("rut"));
+                            cliente.setId(rs.getInt("id"));
+
+                        }
+                        rs.close();
+                    }
+                    st.close();
+                }
+
+            }
+        } catch (Exception e) {
+            cliente = null;
+            logger.debug("Error al intentar obtener cliente por id : {}", e.toString(), e);
+            logger.error("Error al intentar obtener cliente por id : {}", e.toString());
+        }
+        return cliente;
+    }
     public List<Cliente> getClientes() {
         List<Cliente> clientes = new ArrayList<Cliente>();
         try {

@@ -136,7 +136,10 @@ public class LoginAcces extends javax.swing.JFrame {
                 String palabra = new String(password);
                 String clave = SecurityUtils.sha256(palabra);
                 if(clave.equals(usuario.getClave())){
-                    JOptionPane.showMessageDialog(rootPane,"Si funciono");
+                    MenuPrinipal menuPrinipal = new MenuPrinipal();
+                    menuPrinipal.setVisible(true);
+                    menuPrinipal.setLocationRelativeTo(null);
+                    this.dispose();
                 }else{
                     JOptionPane.showMessageDialog(rootPane, "Clave ingresada no corresponde");
                 }

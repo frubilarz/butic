@@ -121,3 +121,23 @@ CREATE TABLE IF NOT EXISTS `buticdb`.`carros_productos` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `buticdb`.`fiados`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `buticdb`.`fiados` ;
+
+CREATE TABLE IF NOT EXISTS `buticdb`.`fiados` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `clientes_id` INT(11) NOT NULL,
+  `deuda` DOUBLE NULL,
+  `ultimo_pago` DATE NULL,
+  `ultimo_abono` DOUBLE NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_fiados_clientes1_idx` (`clientes_id` ASC),
+  CONSTRAINT `fk_fiados_clientes1`
+    FOREIGN KEY (`clientes_id`)
+    REFERENCES `buticdb`.`clientes` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
