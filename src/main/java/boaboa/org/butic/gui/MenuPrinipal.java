@@ -5,6 +5,8 @@
  */
 package boaboa.org.butic.gui;
 
+import boaboa.org.butic.model.Usuario;
+
 /**
  *
  * @author frubilar
@@ -18,6 +20,11 @@ public class MenuPrinipal extends javax.swing.JFrame {
         initComponents();
     }
 
+    MenuPrinipal(Usuario usuario) {
+        initComponents();
+        this.nombreLabel.setText(usuario.getNombre());
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,9 +34,10 @@ public class MenuPrinipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        nombreLabel = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         clienteMenu = new javax.swing.JMenu();
-        agregarMenu = new javax.swing.JMenu();
         modificaMenu = new javax.swing.JMenu();
         jMenu6 = new javax.swing.JMenu();
         productosMenu = new javax.swing.JMenu();
@@ -38,6 +46,10 @@ public class MenuPrinipal extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("BIENVENIDO ");
+
+        nombreLabel.setText("Nombre");
 
         clienteMenu.setText("Clientes");
         clienteMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -51,20 +63,7 @@ public class MenuPrinipal extends javax.swing.JFrame {
             }
         });
 
-        agregarMenu.setText("Agregar");
-        agregarMenu.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                agregarMenuMouseClicked(evt);
-            }
-        });
-        agregarMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                agregarMenuActionPerformed(evt);
-            }
-        });
-        clienteMenu.add(agregarMenu);
-
-        modificaMenu.setText("Modificar");
+        modificaMenu.setText("Verificar Cliente");
         modificaMenu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 modificaMenuMouseClicked(evt);
@@ -84,7 +83,7 @@ public class MenuPrinipal extends javax.swing.JFrame {
 
         productosMenu.setText("Productos");
 
-        agregarProductosMenu.setText("Agregar");
+        agregarProductosMenu.setText("Verificar Codigo");
         agregarProductosMenu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 agregarProductosMenuMouseClicked(evt);
@@ -92,7 +91,7 @@ public class MenuPrinipal extends javax.swing.JFrame {
         });
         productosMenu.add(agregarProductosMenu);
 
-        agregarProductosMenu1.setText("Modificar");
+        agregarProductosMenu1.setText("Mostrar Productos");
         productosMenu.add(agregarProductosMenu1);
 
         jMenuBar1.add(productosMenu);
@@ -106,22 +105,25 @@ public class MenuPrinipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(218, 218, 218)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(nombreLabel)
+                    .addComponent(jLabel1))
+                .addContainerGap(306, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 375, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(139, 139, 139)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(nombreLabel)
+                .addContainerGap(184, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void agregarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarMenuActionPerformed
-        ClienteForm form = new ClienteForm();
-        form.setVisible(true);
-        form.setLocationRelativeTo(null);
-        this.dispose();
-    }//GEN-LAST:event_agregarMenuActionPerformed
 
     private void clienteMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clienteMenuActionPerformed
 
@@ -136,23 +138,17 @@ public class MenuPrinipal extends javax.swing.JFrame {
     }//GEN-LAST:event_modificaMenuActionPerformed
 
     private void modificaMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modificaMenuMouseClicked
-        BuscarClienteParaEditar editar = new BuscarClienteParaEditar();
+        RutCliente editar = new RutCliente();
         editar.setVisible(true);
         editar.setLocationRelativeTo(null);
         this.dispose();
     }//GEN-LAST:event_modificaMenuMouseClicked
 
-    private void agregarMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agregarMenuMouseClicked
-        ClienteForm form = new ClienteForm();
-        form.setVisible(true);
-        form.setLocationRelativeTo(null);
-        this.dispose();
-    }//GEN-LAST:event_agregarMenuMouseClicked
-
     private void agregarProductosMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agregarProductosMenuMouseClicked
-        ProductoForm productoForm = new ProductoForm();
-        productoForm.setVisible(true);
-        productoForm.setLocationRelativeTo(null);
+
+        CodigoProducto codigoForm = new CodigoProducto();
+        codigoForm.setVisible(true);
+        codigoForm.setLocationRelativeTo(null);
         this.dispose();
     }//GEN-LAST:event_agregarProductosMenuMouseClicked
 
@@ -192,14 +188,15 @@ public class MenuPrinipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu agregarMenu;
     private javax.swing.JMenu agregarProductosMenu;
     private javax.swing.JMenu agregarProductosMenu1;
     private javax.swing.JMenu clienteMenu;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu modificaMenu;
+    private javax.swing.JLabel nombreLabel;
     private javax.swing.JMenu productosMenu;
     // End of variables declaration//GEN-END:variables
 }

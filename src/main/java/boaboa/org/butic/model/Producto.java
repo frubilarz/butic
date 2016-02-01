@@ -11,12 +11,13 @@ import java.util.Objects;
  *
  * @author frubilar
  */
-public class Producto extends BaseBean{
-    
+public class Producto extends BaseBean {
+
     private Integer id = null;
     private String nombre = null;
     private Integer stock = null;
     private Float valor = null;
+    private String codigo = null;
 
     public Producto() {
     }
@@ -53,6 +54,14 @@ public class Producto extends BaseBean{
         this.valor = valor;
     }
 
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -74,7 +83,5 @@ public class Producto extends BaseBean{
         }
         return true;
     }
-    
-    
-    
+
 }

@@ -14,13 +14,12 @@ import javax.swing.JOptionPane;
  *
  * @author frubilar
  */
-public class BuscarClienteParaEditar extends javax.swing.JFrame {
+public class RutCliente extends javax.swing.JFrame {
 
     /**
      * Creates new form BuscarClienteParaEditar
      */
-
-    public BuscarClienteParaEditar() {
+    public RutCliente() {
         initComponents();
     }
 
@@ -41,7 +40,7 @@ public class BuscarClienteParaEditar extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("EDITAR CLIENTE");
+        jLabel1.setText("CLIENTES");
 
         jLabel2.setText("RUT");
 
@@ -67,22 +66,20 @@ public class BuscarClienteParaEditar extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(256, 256, 256)
-                                .addComponent(jLabel1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel2)
-                                .addGap(48, 48, 48)
-                                .addComponent(rutField, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 8, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(buscarButon, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(atrasButon, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(28, 28, 28)
+                        .addComponent(atrasButon, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(256, 256, 256)
+                        .addComponent(jLabel1)
+                        .addGap(0, 277, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2)
+                        .addGap(39, 39, 39)
+                        .addComponent(rutField)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -119,12 +116,16 @@ public class BuscarClienteParaEditar extends javax.swing.JFrame {
             Cliente cliente = new Cliente();
             cliente = servicioDB.getClientePorRut(RutUtils.parseRut(rutString));
             if (cliente == null) {
-                JOptionPane.showMessageDialog(rootPane, "No fue encontrado rut ");
+                ClienteForm clienteForm = new ClienteForm(rutString);
+                JOptionPane.showMessageDialog(clienteForm, "Nuevo cliente");
+                clienteForm.setVisible(true);
+                clienteForm.setLocationRelativeTo(null);
+                this.dispose();
             } else {
-             ClienteForm clienteForm = new ClienteForm(cliente);
-             clienteForm.setVisible(true);
-             clienteForm.setLocationRelativeTo(null);
-             this.dispose();
+                ClienteForm clienteForm = new ClienteForm(cliente);
+                clienteForm.setVisible(true);
+                clienteForm.setLocationRelativeTo(null);
+                this.dispose();
             }
         } else {
             JOptionPane.showMessageDialog(rootPane, "No es un rut valido");
@@ -148,20 +149,21 @@ public class BuscarClienteParaEditar extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BuscarClienteParaEditar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RutCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BuscarClienteParaEditar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RutCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BuscarClienteParaEditar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RutCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BuscarClienteParaEditar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RutCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BuscarClienteParaEditar().setVisible(true);
+                new RutCliente().setVisible(true);
             }
         });
     }

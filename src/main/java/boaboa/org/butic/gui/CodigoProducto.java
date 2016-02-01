@@ -6,27 +6,21 @@
 package boaboa.org.butic.gui;
 
 import boaboa.org.butic.model.Producto;
+import boaboa.org.butic.servicio.ServicioDB;
+import javax.swing.JOptionPane;
+import org.apache.commons.lang.StringUtils;
 
 /**
  *
  * @author frubilar
  */
-public class ProductoForm extends javax.swing.JFrame {
+public class CodigoProducto extends javax.swing.JFrame {
 
     /**
-     * Creates new form ProductoForm
+     * Creates new form CodigoProducto
      */
-    public ProductoForm() {
+    public CodigoProducto() {
         initComponents();
-    }
-
-    ProductoForm(Producto producto) {
-        initComponents();
-    }
-
-    ProductoForm(String codigo) {
-        initComponents();
-        this.codigoLabel.setText(codigo);
     }
 
     /**
@@ -40,29 +34,17 @@ public class ProductoForm extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        nobreField = new javax.swing.JTextField();
-        stockField = new javax.swing.JTextField();
-        valorField = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
+        codigoFlied = new javax.swing.JTextField();
         aceptarButton = new javax.swing.JButton();
-        atrasButon = new javax.swing.JButton();
-        codigoLabel = new javax.swing.JLabel();
+        atrarButon = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("PRODUCTOS");
 
-        jLabel2.setText("Nombre");
+        jLabel2.setText("CODIGO");
 
-        jLabel3.setText("Stock");
-
-        jLabel4.setText("Valor");
-
-        jLabel5.setText("Codigo");
-
-        aceptarButton.setText("GUARDAR");
+        aceptarButton.setText("BUSCAR");
         aceptarButton.setPreferredSize(new java.awt.Dimension(80, 40));
         aceptarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -70,15 +52,13 @@ public class ProductoForm extends javax.swing.JFrame {
             }
         });
 
-        atrasButon.setText("ATRAS");
-        atrasButon.setPreferredSize(new java.awt.Dimension(80, 40));
-        atrasButon.addActionListener(new java.awt.event.ActionListener() {
+        atrarButon.setText("ATRAS");
+        atrarButon.setPreferredSize(new java.awt.Dimension(80, 40));
+        atrarButon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                atrasButonActionPerformed(evt);
+                atrarButonActionPerformed(evt);
             }
         });
-
-        codigoLabel.setText("Codigo");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -87,29 +67,19 @@ public class ProductoForm extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(222, 222, 222)
+                        .addGap(244, 244, 244)
                         .addComponent(jLabel1)
-                        .addGap(0, 294, Short.MAX_VALUE))
+                        .addGap(0, 272, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5))
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(valorField)
-                            .addComponent(stockField)
-                            .addComponent(nobreField)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(codigoLabel)
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                        .addComponent(codigoFlied))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(aceptarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(atrasButon, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(25, 25, 25)
+                        .addComponent(atrarButon, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -117,26 +87,14 @@ public class ProductoForm extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(34, 34, 34)
+                .addGap(126, 126, 126)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(codigoLabel))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(nobreField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(stockField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(valorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(codigoFlied, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 151, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(aceptarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(atrasButon, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(atrarButon, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -144,16 +102,34 @@ public class ProductoForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void aceptarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarButtonActionPerformed
+
+        String codigo = this.codigoFlied.getText();
+        if (StringUtils.isNotEmpty(codigo)) {
+            Producto producto = new Producto();
+            ServicioDB servicioDB = new ServicioDB();
+            producto = servicioDB.getProducto(codigo);
+            if (producto != null) {
+                ProductoForm productoForm = new ProductoForm(producto);
+                productoForm.setVisible(true);
+                productoForm.setLocationRelativeTo(null);
+                this.dispose();
+            } else {
+                ProductoForm productoForm = new ProductoForm(codigo);
+                productoForm.setVisible(true);
+                productoForm.setLocationRelativeTo(null);
+                this.dispose();
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Debe ingresar un codigo");
+        }
     }//GEN-LAST:event_aceptarButtonActionPerformed
 
-    private void atrasButonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasButonActionPerformed
-
+    private void atrarButonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrarButonActionPerformed
         MenuPrinipal menuPrinipal = new MenuPrinipal();
         menuPrinipal.setVisible(true);
         menuPrinipal.setLocationRelativeTo(null);
         this.dispose();
-        // TODO add your handling code here:
-    }//GEN-LAST:event_atrasButonActionPerformed
+    }//GEN-LAST:event_atrarButonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -172,35 +148,29 @@ public class ProductoForm extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ProductoForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CodigoProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ProductoForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CodigoProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ProductoForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CodigoProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ProductoForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CodigoProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ProductoForm().setVisible(true);
+                new CodigoProducto().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton aceptarButton;
-    private javax.swing.JButton atrasButon;
-    private javax.swing.JLabel codigoLabel;
+    private javax.swing.JButton atrarButon;
+    private javax.swing.JTextField codigoFlied;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JTextField nobreField;
-    private javax.swing.JTextField stockField;
-    private javax.swing.JTextField valorField;
     // End of variables declaration//GEN-END:variables
 }

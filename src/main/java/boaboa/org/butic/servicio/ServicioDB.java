@@ -8,6 +8,7 @@ package boaboa.org.butic.servicio;
 import boaboa.org.butic.model.Boleta;
 import boaboa.org.butic.model.Cliente;
 import boaboa.org.butic.model.Local;
+import boaboa.org.butic.model.Producto;
 import boaboa.org.butic.model.Usuario;
 import java.io.Serializable;
 import java.sql.Connection;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.Properties;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -169,6 +171,41 @@ public class ServicioDB implements Serializable {
         } catch (Exception e) {
         }
         return usuario;
+    }
+
+    public Producto getProducto(String codigo) {
+        Producto producto = null;
+        try {
+            if (StringUtils.isNotEmpty(codigo)) {
+                if (!isConectado()) {
+                    conectar();
+                }
+                PreparedStatement st = null;
+                String query = "select * from productos where codigo = ?";
+                st = conexion.prepareStatement(query);
+                if (st != null) {
+                    st.setString(1, codigo);
+                    ResultSet rs = st.executeQuery();
+                    if (rs != null) {
+                        if (rs.next()) {
+                            producto = new Producto();
+                            producto.setId(rs.getInt("id"));
+                            producto.setCodigo(rs.getString("codigo"));
+                            producto.setNombre(rs.getString("nombre"));
+                            producto.setStock(rs.getInt("stock"));
+                            producto.setValor(rs.getFloat("valor"));
+                        }
+                        rs.close();
+                    }
+                    st.close();
+                }
+            }
+        } catch (Exception e) {
+            producto = null;
+            logger.error("Error al intentar buscar un producto por codigo: {}", e.toString());
+            logger.debug("Error al intentar buscar un producto por codigo: {}", e.toString(), e);
+        }
+        return producto;
     }
 
     public Boleta getBoleta(Integer id) {
@@ -465,6 +502,7 @@ public class ServicioDB implements Serializable {
         }
         return cliente;
     }
+
     public List<Cliente> getClientes() {
         List<Cliente> clientes = new ArrayList<Cliente>();
         try {

@@ -65,9 +65,12 @@ DROP TABLE IF EXISTS `buticdb`.`productos` ;
 CREATE TABLE IF NOT EXISTS `buticdb`.`productos` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
+  `codigo` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,    
   `stock` INT(11) NOT NULL DEFAULT '0',
   `valor` FLOAT NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX  `codigo_UNIQUE` (`codigo` ASC)
+)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_spanish_ci;
