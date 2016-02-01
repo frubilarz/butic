@@ -34,6 +34,7 @@ public class MenuPrinipal extends javax.swing.JFrame {
         jMenu6 = new javax.swing.JMenu();
         productosMenu = new javax.swing.JMenu();
         agregarProductosMenu = new javax.swing.JMenu();
+        agregarProductosMenu1 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -81,10 +82,18 @@ public class MenuPrinipal extends javax.swing.JFrame {
 
         jMenuBar1.add(clienteMenu);
 
-        productosMenu.setText("Prodcutos");
+        productosMenu.setText("Productos");
 
         agregarProductosMenu.setText("Agregar");
+        agregarProductosMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                agregarProductosMenuMouseClicked(evt);
+            }
+        });
         productosMenu.add(agregarProductosMenu);
+
+        agregarProductosMenu1.setText("Modificar");
+        productosMenu.add(agregarProductosMenu1);
 
         jMenuBar1.add(productosMenu);
 
@@ -140,6 +149,13 @@ public class MenuPrinipal extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_agregarMenuMouseClicked
 
+    private void agregarProductosMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agregarProductosMenuMouseClicked
+        ProductoForm productoForm = new ProductoForm();
+        productoForm.setVisible(true);
+        productoForm.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_agregarProductosMenuMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -178,6 +194,7 @@ public class MenuPrinipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu agregarMenu;
     private javax.swing.JMenu agregarProductosMenu;
+    private javax.swing.JMenu agregarProductosMenu1;
     private javax.swing.JMenu clienteMenu;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu6;

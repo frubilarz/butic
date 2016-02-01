@@ -40,12 +40,20 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="productosMenu">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Prodcutos"/>
+            <Property name="text" type="java.lang.String" value="Productos"/>
           </Properties>
           <SubComponents>
             <Menu class="javax.swing.JMenu" name="agregarProductosMenu">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Agregar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="agregarProductosMenuMouseClicked"/>
+              </Events>
+            </Menu>
+            <Menu class="javax.swing.JMenu" name="agregarProductosMenu1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Modificar"/>
               </Properties>
             </Menu>
           </SubComponents>
