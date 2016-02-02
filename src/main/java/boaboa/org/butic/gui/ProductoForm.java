@@ -6,6 +6,9 @@
 package boaboa.org.butic.gui;
 
 import boaboa.org.butic.model.Producto;
+import boaboa.org.butic.servicio.ServicioDB;
+import boaboa.org.butic.utils.NumberUtils;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,12 +19,18 @@ public class ProductoForm extends javax.swing.JFrame {
     /**
      * Creates new form ProductoForm
      */
+    private  Integer id = null;
     public ProductoForm() {
         initComponents();
     }
 
     ProductoForm(Producto producto) {
         initComponents();
+        id = producto.getId();
+        this.codigoLabel.setText(producto.getCodigo());
+        this.nobreField.setText(producto.getNombre());
+        this.stockField.setText(producto.getStock().toString());
+        this.valorField.setText(producto.getValor().toString());
     }
 
     ProductoForm(String codigo) {
@@ -144,6 +153,38 @@ public class ProductoForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void aceptarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarButtonActionPerformed
+        ServicioDB servicioDB = new ServicioDB();
+        String nombre = this.nobreField.getText();
+        String stock = this.stockField.getText();
+        String valor = this.valorField.getText();
+        String codigo = this.codigoLabel.getText();
+        if (nombre.length() * stock.length() * valor.length() * codigo.length() != 0) {
+            Float v = NumberUtils.numberFloat(valor);
+            Integer s = NumberUtils.NumberUtils(stock);
+            if (s != null) {
+                if (v != null) {
+                    Producto producto = new Producto();
+                    producto.setId(id);
+                    producto.setCodigo(codigo);
+                    producto.setStock(s);
+                    producto.setValor(v);
+                    producto.setNombre(nombre);
+                    boolean salida = servicioDB.guardar(producto);
+                    if(salida){
+                        JOptionPane.showMessageDialog(rootPane,"Producto Guardado con exito");
+                        MenuPrinipal prinipal = new MenuPrinipal();
+                        prinipal.setVisible(true);
+                        prinipal.setLocationRelativeTo(null);
+                        this.dispose();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "Stock debe ser un valor valido");
+                }
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Stock debe ser un numero");
+
+            }
+        }
     }//GEN-LAST:event_aceptarButtonActionPerformed
 
     private void atrasButonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasButonActionPerformed

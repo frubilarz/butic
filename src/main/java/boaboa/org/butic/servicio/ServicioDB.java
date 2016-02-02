@@ -324,6 +324,57 @@ public class ServicioDB implements Serializable {
         return salida;
     }
 
+    public boolean guardar(Producto producto) {
+        boolean salida = false;
+        try {
+            if (producto != null) {
+                if (!isConectado()) {
+                    conectar();
+                }
+                boolean update = false;
+                if (producto.getId() != null) {
+                    if (producto.getId() > 0) {
+                        update = true;
+                    }
+                }
+
+                PreparedStatement st = null;
+                String query = "";
+                if (update) {
+                    query = "UPDATE productos SET nombre=?, codigo=?,stock=?, valor=? WHERE id = ?";
+                    st = conexion.prepareStatement(query);
+                    st.setString(1, producto.getNombre());
+                    st.setString(2, producto.getCodigo());
+                    st.setInt(3, producto.getStock());
+                    st.setFloat(4, producto.getValor());
+                    st.setInt(5, producto.getId());
+                } else {
+                    query = "INSERT INTO productos (nombre,codigo,stock,valor) VALUES (?,?,?,?)";
+                    st = conexion.prepareStatement(query);
+                    st.setString(1, producto.getNombre());
+                    st.setString(2, producto.getCodigo());
+                    st.setInt(3, producto.getStock());
+                    st.setFloat(4, producto.getValor());
+                }
+                if (st != null) {
+                    logger.info(st.toString());
+                    st.execute();
+
+                    int updateCount = st.getUpdateCount();
+                    if (updateCount > 0) {
+                        salida = true;
+                    }
+                }
+
+            }
+        } catch (Exception e) {
+            salida = false;
+            logger.debug("Error al intentar  persisitir: {}", e.toString(), e);
+            logger.error("error al intentar persisitir: {}", e.toString());
+        }
+        return salida;
+    }
+
     public boolean guardar(Usuario usuario) {
         boolean salida = false;
         try {

@@ -30,4 +30,18 @@ public abstract class NumberUtils implements Serializable {
         }
         return numeroInt;
     }
+    
+    public static Float numberFloat(String numero){
+        Float numeroFloat= null;
+        try {
+            if(StringUtils.isNotEmpty(numero)){
+                numeroFloat = Float.parseFloat(numero);
+            }
+        } catch (Exception e) {
+            numeroFloat= null;
+            logger.debug("Error al intentar parsear un string a float: {}",e.toString(),e);
+            logger.error("Error al intentar parsear un string a float: {}",e.toString());
+        }
+        return numeroFloat;
+    }
 }
