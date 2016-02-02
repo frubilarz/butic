@@ -51,8 +51,19 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu3">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Edit"/>
+            <Property name="text" type="java.lang.String" value="Venta"/>
           </Properties>
+          <SubComponents>
+            <Menu class="javax.swing.JMenu" name="realizarVenta">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Realizar Venta"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="realizarVentaMouseClicked"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="realizarVentaActionPerformed"/>
+              </Events>
+            </Menu>
+          </SubComponents>
         </Menu>
       </SubComponents>
     </Menu>

@@ -44,6 +44,7 @@ public class MenuPrinipal extends javax.swing.JFrame {
         agregarProductosMenu = new javax.swing.JMenu();
         agregarProductosMenu1 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
+        realizarVenta = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -96,7 +97,21 @@ public class MenuPrinipal extends javax.swing.JFrame {
 
         jMenuBar1.add(productosMenu);
 
-        jMenu3.setText("Edit");
+        jMenu3.setText("Venta");
+
+        realizarVenta.setText("Realizar Venta");
+        realizarVenta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                realizarVentaMouseClicked(evt);
+            }
+        });
+        realizarVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                realizarVentaActionPerformed(evt);
+            }
+        });
+        jMenu3.add(realizarVenta);
+
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
@@ -152,6 +167,16 @@ public class MenuPrinipal extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_agregarProductosMenuMouseClicked
 
+    private void realizarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_realizarVentaActionPerformed
+
+    }//GEN-LAST:event_realizarVentaActionPerformed
+
+    private void realizarVentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_realizarVentaMouseClicked
+        VentaForm form = new VentaForm();
+        form.setVisible(true);
+        form.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_realizarVentaMouseClicked
     /**
      * @param args the command line arguments
      */
@@ -198,5 +223,6 @@ public class MenuPrinipal extends javax.swing.JFrame {
     private javax.swing.JMenu modificaMenu;
     private javax.swing.JLabel nombreLabel;
     private javax.swing.JMenu productosMenu;
+    private javax.swing.JMenu realizarVenta;
     // End of variables declaration//GEN-END:variables
 }
