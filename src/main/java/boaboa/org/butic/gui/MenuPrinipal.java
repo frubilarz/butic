@@ -26,10 +26,10 @@ public class MenuPrinipal extends javax.swing.JFrame {
     MenuPrinipal(Integer rut) {
         initComponents();
         setRut(rut);
-        ServicioDB servicioDB = new  ServicioDB();
-        Usuario usuario = servicioDB.getUsuario(rut);
+        ServicioDB servicioDB = new ServicioDB();
+        Usuario usuario = servicioDB.getUsuario(getRut());
         this.nombreLabel.setText(usuario.getNombre());
-        
+
     }
 
     public Integer getRut() {
@@ -39,15 +39,13 @@ public class MenuPrinipal extends javax.swing.JFrame {
     public void setRut(Integer rut) {
         this.rut = rut;
     }
-    
-    
+
 //    MenuPrinipal(Usuario usuario) {
 //        initComponents();
 //        
 //        this.nombreLabel.setText(usuario.getNombre());
 //        setRut(usuario.getRut());
 //    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -279,10 +277,13 @@ public class MenuPrinipal extends javax.swing.JFrame {
 
         ServicioDB servicioDB = new ServicioDB();
         boolean consulta = servicioDB.verificarAdmin(rut);
-        if(!consulta){
+        if (!consulta) {
             JOptionPane.showMessageDialog(clienteMenu, "Usuario No admin");
-        }else{
-            JOptionPane.showMessageDialog(clienteMenu,"Cliente admin");
+        } else {
+            CrearUsuario form = new CrearUsuario(rut);
+            form.setVisible(true);
+            form.setLocationRelativeTo(null);
+            this.dispose();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_crearUsuarioActionPerformed
