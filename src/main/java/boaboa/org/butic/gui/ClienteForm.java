@@ -37,9 +37,9 @@ public class ClienteForm extends javax.swing.JFrame {
         this.direccionField.setText(cliente.getDireccion());
     }
 
-    ClienteForm(String rutString) {
+    ClienteForm(Integer rutString) {
         initComponents();
-        this.rutLabel.setText(rutString);
+        this.rutLabel.setText(RutUtils.formatear(rutString));
     }
 
     /**

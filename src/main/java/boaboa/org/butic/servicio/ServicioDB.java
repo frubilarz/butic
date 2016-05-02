@@ -591,4 +591,38 @@ public class ServicioDB implements Serializable {
         return clientes;
     }
 
+    public boolean verificarAdmin(Integer rut){
+        boolean salida = false;
+        try {
+            if (rut != null) {
+                if (!isConectado()) {
+                    conectar();
+                }
+                PreparedStatement st = null;
+                String query = "select u.* from  usuarios u join roles on u.rol_id = roles.id "
+                        + " where roles.nombre = 'admin' and u.rut = ? ";
+                st = conexion.prepareStatement(query);
+                if (st != null) {
+                    st.setInt(1, rut);
+
+                    ResultSet rs = st.executeQuery();
+                    if (rs != null) {
+                        if (rs.next()) {
+                            salida = true;
+                        }
+                        rs.close();
+                    }
+                    st.close();
+                }
+
+            }
+        } catch (Exception e) {
+            salida = false;
+            logger.debug("Error al intentar obtener usuario Con rol Admin : {}", e.toString(), e);
+            logger.error("Error al intentar obtener Usuario con rol Admin : {}", e.toString());
+        }
+            
+        return salida;
+    }
+    
 }

@@ -137,7 +137,7 @@ public class LoginAcces extends javax.swing.JFrame {
                 String palabra = new String(password);
                 String clave = SecurityUtils.sha256(palabra);
                 if(clave.equals(usuario.getClave())){
-                    MenuPrinipal menuPrinipal = new MenuPrinipal(usuario);
+                    MenuPrinipal menuPrinipal = new MenuPrinipal(usuario.getRut());
                     menuPrinipal.setVisible(true);
                     menuPrinipal.setLocationRelativeTo(null);
                     this.dispose();

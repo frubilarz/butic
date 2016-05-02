@@ -16,10 +16,24 @@ import javax.swing.JOptionPane;
  */
 public class RutCliente extends javax.swing.JFrame {
 
-    /**
-     * Creates new form BuscarClienteParaEditar
-     */
+
+    private Integer rut = null;
+
+    public Integer getRut() {
+        return rut;
+    }
+
+    public void setRut(Integer rut) {
+        this.rut = rut;
+    }
+    
+    
     public RutCliente() {
+        initComponents();
+    }
+
+    RutCliente(Integer rut) {
+        setRut(rut);
         initComponents();
     }
 
@@ -102,7 +116,7 @@ public class RutCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void atrasButonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasButonActionPerformed
-        MenuPrinipal menuPrinipal = new MenuPrinipal();
+        MenuPrinipal menuPrinipal = new MenuPrinipal(rut);
         menuPrinipal.setVisible(true);
         menuPrinipal.setLocationRelativeTo(null);
         this.dispose();
@@ -116,7 +130,7 @@ public class RutCliente extends javax.swing.JFrame {
             Cliente cliente = new Cliente();
             cliente = servicioDB.getClientePorRut(RutUtils.parseRut(rutString));
             if (cliente == null) {
-                ClienteForm clienteForm = new ClienteForm(rutString);
+                ClienteForm clienteForm = new ClienteForm(RutUtils.parseRut(rutString));
                 JOptionPane.showMessageDialog(clienteForm, "Nuevo cliente");
                 clienteForm.setVisible(true);
                 clienteForm.setLocationRelativeTo(null);

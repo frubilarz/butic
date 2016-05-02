@@ -13,13 +13,13 @@
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="clienteMenuKeyPressed"/>
           </Events>
           <SubComponents>
-            <Menu class="javax.swing.JMenu" name="modificaMenu">
+            <Menu class="javax.swing.JMenu" name="verificarMenu">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Verificar Cliente"/>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="modificaMenuMouseClicked"/>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="modificaMenuActionPerformed"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="verificarMenuMouseClicked"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="verificarMenuActionPerformed"/>
               </Events>
             </Menu>
             <Menu class="javax.swing.JMenu" name="jMenu6">
@@ -61,6 +61,43 @@
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="realizarVentaMouseClicked"/>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="realizarVentaActionPerformed"/>
+              </Events>
+            </Menu>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="usuarioMenu">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Usuarios"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="usuarioMenuActionPerformed"/>
+          </Events>
+          <SubComponents>
+            <Menu class="javax.swing.JMenu" name="realizarVenta1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Mostrar Usuarios"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="realizarVenta1MouseClicked"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="realizarVenta1ActionPerformed"/>
+              </Events>
+            </Menu>
+            <Menu class="javax.swing.JMenu" name="realizarVenta2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Editar Usuarios"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="realizarVenta2MouseClicked"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="realizarVenta2ActionPerformed"/>
+              </Events>
+            </Menu>
+            <Menu class="javax.swing.JMenu" name="crearUsuario">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Crear Usuarios"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="crearUsuarioMouseClicked"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="crearUsuarioActionPerformed"/>
               </Events>
             </Menu>
           </SubComponents>

@@ -76,6 +76,21 @@ DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_spanish_ci;
 
 
+
+-- -----------------------------------------------------
+-- Table `buticdb`.`roles`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `buticdb`.`roles` ;
+
+CREATE TABLE IF NOT EXISTS `buticdb`.`roles` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `nombre` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NULL DEFAULT NULL,
+    PRIMARY KEY (`id`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8
+    COLLATE = utf8_spanish_ci;
+
+
 -- -----------------------------------------------------
 -- Table `buticdb`.`usuarios`
 -- -----------------------------------------------------
@@ -86,8 +101,16 @@ CREATE TABLE IF NOT EXISTS `buticdb`.`usuarios` (
   `nombre` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NULL DEFAULT NULL,
   `rut` INT(10) UNSIGNED NULL DEFAULT NULL,
   `clave` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NULL DEFAULT NULL,
+    rol_id INT(11),
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `rut_UNIQUE` (`rut` ASC))
+  UNIQUE INDEX `rut_UNIQUE` (`rut` ASC),
+  INDEX `fk_usuarios_roles1_idx` (`rol_id` ASC),
+    CONSTRAINT `fk_usuarios_roles1`
+    FOREIGN KEY (`rol_id`)
+    REFERENCES `buticdb`.`roles` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_spanish_ci;

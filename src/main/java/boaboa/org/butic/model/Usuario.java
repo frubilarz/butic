@@ -17,6 +17,7 @@ public class Usuario extends BaseBean {
     private String nombre = null;
     private Integer rut = null;
     private String clave = null;
+    private Integer rolId = null;
 
     public Usuario() {
     }
@@ -53,6 +54,15 @@ public class Usuario extends BaseBean {
         this.clave = clave;
     }
 
+    public Integer getRolId() {
+        return rolId;
+    }
+
+    public void setRolId(Integer rolId) {
+        this.rolId = rolId;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 7;
